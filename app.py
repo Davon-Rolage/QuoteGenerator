@@ -1,8 +1,6 @@
 import json
-import logging
 import os
 import secrets
-import sys
 import textwrap
 
 import openai
@@ -15,8 +13,7 @@ from PIL import Image, ImageDraw, ImageFont
 load_dotenv()
 
 app = Flask(__name__)
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.ERROR)
+app.secret_key = os.environ.get('SECRET_KEY')
 
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 PEXELS_API_KEY = os.environ.get('PEXELS_API_KEY')
