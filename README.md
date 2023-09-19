@@ -8,5 +8,9 @@ This is a simple quote generator written in python/flask that generates original
 ```python
 OPENAI_API_KEY='your_openai_api_key'
 PEXELS_API_KEY='your_pexels_api_key'
+SECRET_KEY='your_flask_secret_key'
 ```
 5. Run server with `python app.py`
+___
+* To get flask's secret key, you can use command line:<br>
+`python -c "import os; print(os.urandom(24).hex())"`
