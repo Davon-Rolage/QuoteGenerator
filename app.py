@@ -27,6 +27,9 @@ QUOTE_BG_THEME = 'Quote Background'
 def index():
     if request.method == 'POST':
         quote_data = create_quote()
+        if "Error" in quote_data:
+            return render_template('index.html', quote_error=quote_data)
+
         get_random_image()
         place_text_on_image(quote_data['quote'])
         
@@ -46,7 +49,7 @@ def create_quote():
             ]
         )
     except Exception as e:
-        return "There was an error: " + str(e)
+        return "Error: " + str(e)
     
     answer = completion.choices[0].message.content
     answer_json = json.loads(answer)
@@ -61,7 +64,7 @@ def create_quote():
 
 
 def get_random_image():
-    query = QUOTE_BG_THEME.lower().replace(' ', '%20')
+    query = QUOTE_BG_THEME.lower()
     
     url = r'https://api.pexels.com/v1/search?query=' + query
     response = requests.get(url, headers={'Authorization': PEXELS_API_KEY}, params={'per_page': 1})
