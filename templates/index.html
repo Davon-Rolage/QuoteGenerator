@@ -1,76 +1,67 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <title>OQG</title>
+  <title>OQG</title>
 
-    <style>
-      body {
-      background-image: url(static/images/background.png);
-      background-repeat: no-repeat;
-      background-size: 100%;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-  </head>
-  <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-    <div class="container-fluid text-center pt-3" style="color: aliceblue">
-        <h1>Original Quote Generator</h1>
-        
-        <form id="form" action="/" method="post">
-            {{ csrf_token }}
-            <button id="button" class="btn btn-primary shadow-none" type="submit">
-              <span id="spinner" style="display: none" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              <span id="button-text">Generate a quote</span>
-            </button>
-        </form>
+  <div class="container-wrapper text-center pt-3">
+    <h1>Original Quote Generator</h1>
     
-        {% if request.method == 'POST' %}
-          {% if quote_error %}
-            <div class="container-fluid" style="margin-top: 20px;">
-              <p>{{ quote_error }}</p>
-              <p>Sorry about that</p>
-            </div>
-          {% else %}
-            <div class="container-fluid" style="margin-top: 20px;"></div>
-              <figure>
-                <blockquote class="blockquote">
-                  <p>{{ quote_data['quote'] }}</p>
-                </blockquote>
-                <figcaption class="blockquote-footer" style="color: aliceblue">
-                  {{ quote_data['author'] }} in <cite title="Source Title">{{ quote_data['source'] }}</cite>
-                </figcaption>
-              </figure>
-              
-              <img src="{{ url_for('static', filename='images/final_image.jpeg') }}" alt="Image with Text">
-            </div>
-          {% endif %}
-        {% endif %}
-    </div>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top" style="position: fixed; bottom: 0; width: 100%;">
-      <p style="color: aliceblue; margin-left: 10px;">&copy; 2023 OQG, <a href="https://newa.fun" target="_blank" style="text-decoration: none; color: inherit;">Newa Fun</a></p>
-    </footer>
-  </body>
+    <form id="form" action="/" method="post" class="my-3">
+        {{ csrf_token }}
+        <button id="btn-generate" class="btn btn-primary shadow-none" type="submit">
+          <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span id="button-text">Generate a quote</span>
+        </button>
+    </form>
 
-  <script>
-    document.getElementById("form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      document.getElementsByTagName("button")[0].disabled = true;
-      document.getElementById("button-text").innerText = "Generating a quote...";
-      document.getElementById("spinner").style.display = "inline-block";
-      e.target.submit();
-    })
-  </script>
+    {% if request.method == 'POST' %}
+      {% if quote_error %}
+        <div class="m-3">
+          <p>{{ quote_error }}</p>
+          <p>Sorry about that</p>
+        </div>
+      {% else %}
+        <figure class="my-3">
+          <blockquote class="blockquote">
+            <p>{{ quote_data['quote'] }}</p>
+          </blockquote>
+          <figcaption class="blockquote-footer">
+            {{ quote_data['author'] }} in <cite title="Source Title">{{ quote_data['source'] }}</cite>
+          </figcaption>
+        </figure>
+          
+        <img src="{{ url_for('static', filename='images/final_image.jpeg') }}" alt="Image with Text">
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <footer class="ps-3 ms-3 pt-3">
+    <p>&copy; 2023 Original Quote Generator, <a href="https://newa.fun" target="_blank">Newa Fun</a>. All Rights Reserved</p>
+  </footer>
+
+</body>
+
+<script>
+  $("#form").submit(function(e) {
+    e.preventDefault();
+    $("#btn-generate").prop("disabled", true);
+    $("#button-text").text("Generating a quote...");
+    $("#spinner").css("display", "inline-block");
+    e.target.submit();
+  })
+</script>
   
 </html>

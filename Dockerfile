@@ -10,11 +10,6 @@ EXPOSE 8007
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# Environment variables
-ENV SECRET_KEY=${SECRET_KEY}
-ENV OPENAI_API_KEY=${OPENAI_API_KEY}
-ENV PEXELS_API_KEY=${PEXELS_API_KEY}
-
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 

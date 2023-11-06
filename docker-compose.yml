@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  web:
+    image: newa-quote
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: ${QUOTE_CONTAINER_NAME}
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      PEXELS_API_KEY: ${PEXELS_API_KEY}
+      SECRET_KEY: ${SECRET_KEY}
+
+    ports:
+      - "8007:8000"

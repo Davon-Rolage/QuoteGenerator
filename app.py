@@ -88,7 +88,7 @@ def place_text_on_image(text):
     except FileNotFoundError:
         return None
     draw = ImageDraw.Draw(img, "RGBA")
-    font = ImageFont.truetype('arial.ttf', 50)
+    font = ImageFont.truetype('static/fonts/arial.ttf', 50)
     wrapped_text = textwrap.wrap(text, width=img.width//28)
     
     x, y = 100, 100
