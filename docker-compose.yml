@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   web:
-    image: newa-quote
+    image: newa/quote
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -13,4 +13,4 @@ services:
       SECRET_KEY: ${SECRET_KEY}
 
     ports:
-      - "8007:8000"
+      - "8007:8007"
